@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,9 +8,6 @@ public class Hand implements Comparable<Hand> {
 	private List<Card> cards;
 	
 	Hand(List<Card> cards) {
-
-		//this.cards = cards;
-		//Collections.sort(this.cards);
 		this.cards = this.sortByOccurences(cards);
 	}
 	
@@ -41,7 +37,6 @@ public class Hand implements Comparable<Hand> {
 			values.add(c.getNumericValue());
 		}
 		
-		
 		cards.sort((card1, card2) -> {
 			int freq1 = Collections.frequency(values, card1.getNumericValue());
 			int freq2 = Collections.frequency(values, card2.getNumericValue());
@@ -50,8 +45,7 @@ public class Hand implements Comparable<Hand> {
 		        cmp = Integer.compare(card1.getNumericValue(), card2.getNumericValue());
 		    return cmp;
 		});
-
-		
+	
 		Collections.reverse(cards);
 		
 		return cards;

@@ -49,14 +49,13 @@ public class HandEvaluator {
 			
 		}
 		
+		//TODO: rename stuff...
 		private int compareHighCard(Hand otherHand) {
 			
 			var otherStuff = this.foo(otherHand);
 			var thisStuff = this.foo(this.hand);
 			
 			for (var i=0; i<5; i++) {
-				
-				System.out.printf("%d %d %n", otherStuff.get(i), thisStuff.get(i));
 				
 				if (otherStuff.get(i) > thisStuff.get(i)) {
 					return 1;
@@ -68,6 +67,7 @@ public class HandEvaluator {
 			return 0;
 		}
 		
+		//TODO: rename stuff...
 		private List<Integer> foo(Hand hand) { 
 			
 			List<Integer> bla;
@@ -105,9 +105,11 @@ public class HandEvaluator {
 	}
 	
 	
-	List<HandData> evaluateWinner() {
+	void evaluateWinner() {
 		
 		List<HandData> handDataList = new ArrayList<>();
+		String winMessage;
+		String lossMessage;
 		
 		for (Hand hand : this.hands) {
 			var handData = this.evaluateHand(hand);
@@ -117,15 +119,25 @@ public class HandEvaluator {
 		Collections.sort(handDataList);
 		
 		var winner = handDataList.get(0);
-		
-		System.out.printf("Hand %s wins with %s vs%n", winner.getHand().toString(), winner.getHandType());
+		var winners = new ArrayList<>(List.of(winner));
+		List<HandEvaluator.HandData> losers = new ArrayList<>();
 		
 		for (var i=1; i<handDataList.size(); i++) {
-			var otherHand = handDataList.get(i);
-			System.out.printf("Hand %s with %s%n", otherHand.getHand().toString(), otherHand.getHandType());
+			var data = handDataList.get(i);
+			if (data.getHandValue() == winner.getHandValue() && data.getNumericCardValues().equals(winner.getNumericCardValues())) {
+				winners.add(data);
+			} else {
+				losers.add(data);
+			}	
 		}
 		
-		return handDataList;
+		winMessage = winners.size() == 1 ? this.printWinner(winner) : this.printSplitPot(winners);
+		lossMessage = losers.size() > 0 ? this.printLosers(losers) : "";
+		
+		System.out.println(winMessage);
+		System.out.println(lossMessage);
+		
+		//return handDataList;
 		
 	}
 	
@@ -296,6 +308,35 @@ public class HandEvaluator {
 	boolean isStraightFlush(Hand hand) {
 		// straightflush as the name suggests, the hand needs to be a straight and a flush at the same time.
 		return this.isFlush(hand) && this.isStraight(hand);
+	}
+	
+	String printWinner(HandData winner) {
+		return String.format("Hand %s wins with %s%n", winner.getHand().toString(), winner.getHandType());
+		
+	}
+	
+	String printSplitPot(List<HandData> winners) {
+		
+		List<String> winnerStringList = new ArrayList<>();
+		
+		for (HandData winner : winners) {
+			var winnerString = String.format("Hand %s splitts pot with %s%n", winner.getHand().toString(), winner.getHandType());
+			winnerStringList.add(winnerString);
+		}
+		
+		return String.join("", winnerStringList);
+	}
+	
+	String printLosers(List<HandData> losers) {
+		
+		List<String> loserStringList = new ArrayList<>();
+		
+		for (HandData loser : losers) {
+			var loserString = String.format("Hand %s loses with %s%n", loser.getHand().toString(), loser.getHandType());
+			loserStringList.add(loserString);
+		}
+		
+		return String.join("", loserStringList);
 	}
 	
 }
