@@ -1,4 +1,6 @@
-enum CardValue {
+package poker;
+
+public enum CardValue {
 	Deuce(2),
 	Three(3),
 	Four(4),
@@ -19,7 +21,7 @@ enum CardValue {
 		this.value = value;
 	}
 	
-	int getValue() {
+	public int getValue() {
 		return this.value;
 	}
 	

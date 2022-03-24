@@ -1,3 +1,4 @@
+package poker;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -6,19 +7,35 @@ public class Deck {
 
 	private List<Card> cards;
 	
-	Deck() {
+	public Deck() {
+		
+		this.cards = generateDeck();
+//		this.cards = new ArrayList<>();
+//		
+//		for (var i=0; i<suits.length; i++) {
+//			for(var j=0; j<values.length; j++) {
+//				var card = new Card(suits[i], values[j]);
+//				this.cards.add(card);
+//			}
+//		}
+		
+	}
+	
+	private List<Card> generateDeck() {
+		
 		CardSuit[] suits = CardSuit.values();
 		CardValue[] values = CardValue.values();
 		
-		this.cards = new ArrayList<>();
+		var cards = new ArrayList<Card>();
 		
 		for (var i=0; i<suits.length; i++) {
 			for(var j=0; j<values.length; j++) {
 				var card = new Card(suits[i], values[j]);
-				this.cards.add(card);
+				cards.add(card);
 			}
 		}
 		
+		return cards;
 	}
 	
 	List<Card> getDeck() {
@@ -35,7 +52,7 @@ public class Deck {
 		return card;
 	}
 	
-	List<Hand> shuffleUpAndDeal(int playerCount) {
+	public List<Hand> shuffleUpAndDeal(int playerCount) {
 		
 		this.shuffle();
 		

@@ -1,6 +1,7 @@
+package poker;
 import java.util.Random;
 
-enum CardSuit {
+public enum CardSuit {
 	C, D, H, S;
 
 	public static CardSuit randomSuit() {

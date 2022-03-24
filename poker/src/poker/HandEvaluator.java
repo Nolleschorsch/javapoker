@@ -1,3 +1,4 @@
+package poker;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -100,12 +101,12 @@ public class HandEvaluator {
 		
 	}
 	
-	HandEvaluator(List<Hand> hands) {
+	public HandEvaluator(List<Hand> hands) {
 		this.hands = hands;
 	}
 	
 	
-	void evaluateWinner() {
+	public void evaluateWinner() {
 		
 		List<HandData> handDataList = new ArrayList<>();
 		String winMessage;

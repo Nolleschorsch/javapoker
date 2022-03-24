@@ -1,23 +1,24 @@
+package poker;
 public class Card implements Comparable<Card>{
 
 	private CardSuit suit;
 	private CardValue value;
 	
 	
-	Card(CardSuit suit, CardValue value) {
+	public Card(CardSuit suit, CardValue value) {
 		this.suit = suit;
 		this.value = value;
 	}
 	
-	CardSuit getSuit() {
+	public CardSuit getSuit() {
 		return this.suit;
 	}
 
-	CardValue getValue() {
+	public CardValue getValue() {
 		return this.value;
 	}
 	
-	int getNumericValue() {
+	public int getNumericValue() {
 		return this.value.getValue();
 	}
 	
