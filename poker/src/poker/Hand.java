@@ -8,19 +8,19 @@ public class Hand implements Comparable<Hand> {
 
 	private List<Card> cards;
 	
-	Hand(List<Card> cards) {
+	public Hand(List<Card> cards) {
 		this.cards = this.sortByOccurences(cards);
 	}
 	
-	List<Card> getCards() {
+	public List<Card> getCards() {
 		return this.cards;
 	}
 	
-	Card getCard(int index) {
+	public Card getCard(int index) {
 		return this.cards.get(index);
 	}
 
-	int getSize() {
+	public int getSize() {
 		return this.cards.size();
 	}
 	
@@ -31,7 +31,7 @@ public class Hand implements Comparable<Hand> {
 
 	}
 	
-	private List<Card> sortByOccurences(List<Card> cards) {
+	public List<Card> sortByOccurences(List<Card> cards) {
 		
 		var values = new ArrayList<Integer>();
 		for (Card c: cards) {

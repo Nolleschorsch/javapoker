@@ -1,9 +1,16 @@
-package poker;
+package test;
 import java.util.ArrayList;
 import java.util.List;
 
+import poker.Card;
+import poker.CardSuit;
+import poker.CardValue;
+import poker.Hand;
+
 public class HandFixtures {
 
+	private HandFixtures() {}
+	
 	static Hand straightFlush() {
 		
 		var a = new Card(CardSuit.C, CardValue.Deuce);
