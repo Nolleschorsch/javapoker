@@ -22,12 +22,6 @@ class HandTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		
-		cardsAceHigh = CardsFixtures.cardsAceHigh();
-		cardsAceHigh2 = CardsFixtures.cardsAceHigh2();
-		cardsTenHigh = CardsFixtures.cardsTenHigh();
-		cardsFullHouse = CardsFixtures.cardsFullHouse();
-		
 	}
 
 	@AfterAll
@@ -36,6 +30,10 @@ class HandTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		cardsAceHigh = CardsFixtures.cardsAceHigh();
+		cardsAceHigh2 = CardsFixtures.cardsAceHigh2();
+		cardsTenHigh = CardsFixtures.cardsTenHigh();
+		cardsFullHouse = CardsFixtures.cardsFullHouse();
 	}
 
 	@AfterEach

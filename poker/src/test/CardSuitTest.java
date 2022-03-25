@@ -25,9 +25,9 @@ class CardSuitTest {
 	void tearDown() throws Exception {
 	}
 
-	@Test
-	void testRandomSuit() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void testRandomSuit() {
+//		fail("Not yet implemented");
+//	}
 
 }

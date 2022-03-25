@@ -27,11 +27,6 @@ class CardValueTest {
 	}
 
 	@Test
-	void testCardValue() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	void testGetValue() {
 		var expected = 2;
 		var actual = CardValue.Deuce.getValue();

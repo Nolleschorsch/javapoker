@@ -13,6 +13,7 @@ public class HandData implements  Comparable<HandData>{
 	private HandEvaluator handEvaluator;
 	
 	public HandData(String handType, int handValue, List<Integer> numericCardValues, Hand hand) {
+		// TODO: remove/move passed args. not clean/unneccesary stuff
 		this.handType = handType;
 		this.handValue = handValue;
 		this.numericCardValues = numericCardValues;
@@ -24,15 +25,15 @@ public class HandData implements  Comparable<HandData>{
 		return this.handValue;
 	}
 	
-	List<Integer> getNumericCardValues() {
+	public List<Integer> getNumericCardValues() {
 		return this.numericCardValues;
 	}
 	
-	Hand getHand() {
+	public Hand getHand() {
 		return this.hand;
 	}
 	
-	String getHandType() {
+	public String getHandType() {
 		return this.handType;
 	}
 	
@@ -49,7 +50,7 @@ public class HandData implements  Comparable<HandData>{
 	}
 	
 	//TODO: rename stuff...
-	private int compareHighCard(Hand otherHand) {
+	public int compareHighCard(Hand otherHand) {
 		
 		var otherStuff = this.foo(otherHand);
 		var thisStuff = this.foo(this.hand);
@@ -67,7 +68,7 @@ public class HandData implements  Comparable<HandData>{
 	}
 	
 	//TODO: rename stuff...
-	private List<Integer> foo(Hand hand) { 
+	public List<Integer> foo(Hand hand) { 
 		
 		List<Integer> bla;
 		
@@ -83,6 +84,7 @@ public class HandData implements  Comparable<HandData>{
 	
 	
 	public Hand getHandByNumericValues() {
+		
 		List<Card> cards = new ArrayList<>();
 		for (int numericCardValue : this.numericCardValues) {
 			var suit = CardSuit.randomSuit();

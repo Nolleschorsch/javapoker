@@ -2,26 +2,23 @@ package poker;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Deck {
 
+	private Random random;
 	private List<Card> cards;
 	
-	public Deck() {
-		
+	public Deck(Random random) {
+		this.random = random;
 		this.cards = generateDeck();
-//		this.cards = new ArrayList<>();
-//		
-//		for (var i=0; i<suits.length; i++) {
-//			for(var j=0; j<values.length; j++) {
-//				var card = new Card(suits[i], values[j]);
-//				this.cards.add(card);
-//			}
-//		}
-		
 	}
 	
-	private List<Card> generateDeck() {
+	public Deck() {
+		this(new Random());
+	}
+	
+	public List<Card> generateDeck() {
 		
 		CardSuit[] suits = CardSuit.values();
 		CardValue[] values = CardValue.values();
@@ -38,15 +35,16 @@ public class Deck {
 		return cards;
 	}
 	
-	List<Card> getDeck() {
+	public List<Card> getDeck() {
 		return this.cards;
 	}
 	
-	private void shuffle() {
-		Collections.shuffle(this.cards);
+	public void shuffle() {
+		Collections.shuffle(this.cards, random);
 	}
 	
-	private Card deal() {
+	public Card deal() {
+		// remove first card and return it
 		var card = this.cards.get(0);
 		this.cards.remove(0);
 		return card;
