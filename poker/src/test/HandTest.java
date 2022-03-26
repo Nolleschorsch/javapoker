@@ -3,6 +3,7 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -119,6 +120,38 @@ class HandTest {
 	}
 
 	@Test
+	void testGetNumericCardValues() {
+		
+		var expected = Arrays.asList(14, 11, 7, 5, 2);
+		var hand = new Hand(cardsAceHigh);
+		
+		assertEquals(expected, hand.getNumericCardValues());
+		
+	}
+
+	@Test
+	void testGetHandType() {
+		
+		var expected = HandType.HighCard;
+		var hand = new Hand(cardsAceHigh);
+		
+		assertEquals(expected, hand.getHandType(hand));
+		
+	}
+	
+	@Test
+	void testTransformToWheel() {
+		
+		var expected = Arrays.asList(1,2,3,4,5);
+		var hand = HandFixtures.straightWheel();
+		var numericCardValues = hand.getNumericCardValues();
+		
+		assertNotEquals(expected, numericCardValues);
+		assertEquals(expected, hand.transformToWheel(numericCardValues));
+		
+	}
+	
+	@Test
 	void testSortByOccurencesAceHigh() {
 		
 		// SevenC, JackS, DeuceH, AceC, FiveS
@@ -166,11 +199,10 @@ class HandTest {
 	void testCompareToBigger() {
 		
 		var expected = -1;
-		var hand = new Hand(cardsAceHigh);
-		var otherHand = new Hand(cardsTenHigh);
-		var actual = hand.compareTo(otherHand);
+		var hand1 = HandFixtures.straightFlush();
+		var hand2 = HandFixtures.highcardQueen();
 		
-		assertEquals(expected, actual);
+		assertEquals(expected, hand1.compareTo(hand2));
 		
 	}
 	
@@ -178,11 +210,10 @@ class HandTest {
 	void testCompareToSmaller() {
 		
 		var expected = 1;
-		var hand = new Hand(cardsTenHigh);
-		var otherHand = new Hand(cardsAceHigh);
-		var actual = hand.compareTo(otherHand);
+		var hand1 = HandFixtures.twoPair();
+		var hand2 = HandFixtures.straightWheel();
 		
-		assertEquals(expected, actual);
+		assertEquals(expected, hand1.compareTo(hand2));
 		
 	}
 	
@@ -190,12 +221,71 @@ class HandTest {
 	void testCompareToEqual() {
 		
 		var expected = 0;
+		var hand1 = HandFixtures.flush();
+		var hand2 = HandFixtures.flush2();
+		
+		assertEquals(expected, hand1.compareTo(hand2));
+		
+	}
+	
+	@Test
+	void testCompareHighCardBigger() {
+		
+		var expected = -1;
 		var hand = new Hand(cardsAceHigh);
-		var otherHand = new Hand(cardsAceHigh2);
-		var actual = hand.compareTo(otherHand);
+		var otherHand = new Hand(cardsTenHigh);
+		var actual = hand.compareHighCard(otherHand);
 		
 		assertEquals(expected, actual);
 		
 	}
-
+	
+	@Test
+	void testCompareHighCardBiggerCaseStraight() {
+		
+		var expected = -1;
+		var hand = HandFixtures.straight();
+		var otherHand = HandFixtures.straightWheel();
+		var actual = hand.compareHighCard(otherHand);
+		
+		assertEquals(expected, actual);
+		
+	}
+	
+	@Test
+	void testCompareHighCardSmaller() {
+		
+		var expected = 1;
+		var hand = new Hand(cardsTenHigh);
+		var otherHand = new Hand(cardsAceHigh);
+		var actual = hand.compareHighCard(otherHand);
+		
+		assertEquals(expected, actual);
+		
+	}
+	
+	@Test
+	void testCompareHighCardSmallerCaseStraightFlush() {
+		
+		var expected = 1;
+		var hand = HandFixtures.straightFlush();
+		var otherHand = new Hand(CardsFixtures.cardsRoyalFlush());
+		var actual = hand.compareHighCard(otherHand);
+		
+		assertEquals(expected, actual);
+		
+	}
+	
+	@Test
+	void testCompareHighCardEqual() {
+		
+		var expected = 0;
+		var hand = new Hand(cardsAceHigh);
+		var otherHand = new Hand(cardsAceHigh2);
+		var actual = hand.compareHighCard(otherHand);
+		
+		assertEquals(expected, actual);
+		
+	}
+	
 }

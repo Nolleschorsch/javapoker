@@ -7,9 +7,13 @@ import java.util.stream.Collectors;
 public class Hand implements Comparable<Hand> {
 
 	private List<Card> cards;
+	private List<Integer> numericCardValues;
+	private HandType handType;
 	
 	public Hand(List<Card> cards) {
 		this.cards = this.sortByOccurences(cards);
+		this.numericCardValues = this.getNumericCardValues();
+		this.handType = this.getHandType(this);
 	}
 	
 	public List<Card> getCards() {
@@ -29,6 +33,31 @@ public class Hand implements Comparable<Hand> {
 		return this.cards.stream().map(Object::toString)
                 .collect(Collectors.joining(", "));
 
+	}
+	
+	public List<Integer> getNumericCardValues() {
+		List<Integer> numericCardValues = new ArrayList<>();
+		for (Card card : this.getCards()) {
+			numericCardValues.add(card.getNumericValue());
+		}
+		return numericCardValues;
+	}
+	
+	public HandType getHandType(Hand hand) {
+		
+		var handClassifier = new HandClassifier();
+		
+		return handClassifier.classifyHand(hand);
+	}
+	
+	public List<Integer> transformToWheel(List<Integer> numericCardValues) {
+		
+		if (numericCardValues.get(0) == 14 && numericCardValues.get(1) == 5) {
+			numericCardValues.set(0, 1);
+			Collections.sort(numericCardValues);
+		}
+		
+		return numericCardValues;
 	}
 	
 	public List<Card> sortByOccurences(List<Card> cards) {
@@ -51,20 +80,39 @@ public class Hand implements Comparable<Hand> {
 		
 		return cards;
 
+	}
+	
+	public int compareTo(Hand otherHand) {
+
+		var cmp = Integer.compare(this.handType.getRank(), otherHand.handType.getRank());
 		
+		if (cmp == 0) {
+			cmp = this.compareHighCard(otherHand);
+		}
+		
+		return cmp;
 		
 	}
 	
-	public int compareTo(Hand hand) {
+	public int compareHighCard(Hand otherHand) {
 		
-		for(var i=0; i<5; i++) {
+		// change the numericCardValue of an Ace to 1 if he hand is a straight.
+		var numValues = (this.handType == HandType.Straight || this.handType == HandType.StraightFlush)
+				? this.transformToWheel(this.numericCardValues) : this.numericCardValues;
+		
+		var otherNumValues = (otherHand.handType == HandType.Straight || this.handType == HandType.StraightFlush)
+				? otherHand.transformToWheel(otherHand.getNumericCardValues()) : otherHand.getNumericCardValues();
+		
+		for (var i=0; i<5; i++) {
 			
-			if (this.getCard(i).getNumericValue() > hand.getCard(i).getNumericValue()) {
-				return -1;
-			} else if (this.getCard(i).getNumericValue() < hand.getCard(i).getNumericValue()) {
+			if (otherNumValues.get(i) > numValues.get(i)) {
 				return 1;
+			} else if (otherNumValues.get(i) < numValues.get(i)) {
+				return -1;
 			}
 		}
+		
 		return 0;
 	}
+
 }

@@ -67,6 +67,20 @@ public class HandFixtures {
 	    
 	}
 	
+	static Hand flush2() {
+		
+		var a = new Card(CardSuit.H, CardValue.Deuce);
+	    var b = new Card(CardSuit.H, CardValue.Seven);
+	    var c = new Card(CardSuit.H, CardValue.Queen);
+	    var d = new Card(CardSuit.H, CardValue.Jack);
+	    var e = new Card(CardSuit.H, CardValue.Ace);
+	    
+	    List<Card> cards = new ArrayList<>(List.of(d,e,a,c,b));
+	    
+	    return new Hand(cards);
+	    
+	}
+	
 	static Hand straight() {
 		
 		var a = new Card(CardSuit.C, CardValue.Deuce);
