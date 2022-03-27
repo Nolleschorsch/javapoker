@@ -12,8 +12,8 @@ public class Hand implements Comparable<Hand> {
 	
 	public Hand(List<Card> cards) {
 		this.cards = this.sortByOccurences(cards);
+		this.handType = this.getHandType(this.cards);
 		this.numericCardValues = this.getNumericCardValues();
-		this.handType = this.getHandType(this);
 	}
 	
 	public List<Card> getCards() {
@@ -30,24 +30,100 @@ public class Hand implements Comparable<Hand> {
 	
 	public String toString() {
 		
-		return this.cards.stream().map(Object::toString)
+		var transformedCards = new ArrayList<Card>();
+		
+		var needsTransform = 
+				(this.getHandType(cards) == HandType.Straight || this.getHandType(cards) == HandType.StraightFlush) &&
+				(cards.get(0).getNumericValue() == 14 && cards.get(1).getNumericValue() == 5);
+		
+		if (needsTransform) {
+			transformedCards.addAll(cards.subList(1, 5));
+			transformedCards.add(cards.get(0));
+			
+		} else {
+			transformedCards.addAll(cards);
+		}
+		
+		return transformedCards.stream().map(Card::getShortcutString)
                 .collect(Collectors.joining(", "));
 
 	}
 	
 	public List<Integer> getNumericCardValues() {
-		List<Integer> numericCardValues = new ArrayList<>();
+		List<Integer> numCardValues = new ArrayList<>();
 		for (Card card : this.getCards()) {
-			numericCardValues.add(card.getNumericValue());
+			numCardValues.add(card.getNumericValue());
 		}
-		return numericCardValues;
+		return numCardValues;
 	}
 	
-	public HandType getHandType(Hand hand) {
+	public HandType getHandType(List<Card> cards) {
 		
 		var handClassifier = new HandClassifier();
 		
-		return handClassifier.classifyHand(hand);
+		return handClassifier.classifyHand(cards);
+	}
+	
+	public String getAdditionalHandInfo() {
+		
+		String additionalHandInfo;
+		var kickerString = "";
+		
+		if (this.handType == HandType.StraightFlush || this.handType == HandType.Straight) {
+			
+			//TODO: cleanup this whole wheel mess...
+			var transformedCards = this.transformToWheelCards(this.cards);
+			var start= transformedCards.get(0).getValue();
+			var end = transformedCards.get(4).getValue();
+
+			additionalHandInfo = String.format("%s to %s", start, end);
+			
+		} else if (this.handType == HandType.FourOfAKind) {
+			
+			kickerString = this.getKickerString(this.getCards().subList(4, 5));
+			additionalHandInfo = String.format("%ss, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			
+		} else if (this.handType == HandType.FullHouse) {
+			
+			additionalHandInfo = String.format("%ss full of %ss", this.getCard(0).getValue(), this.getCard(3).getValue());
+			
+		} else if (this.handType == HandType.Flush) {
+			
+			kickerString = this.getKickerString(this.getCards().subList(1, 5));
+			additionalHandInfo = String.format("%s high, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			
+		} else if (this.handType == HandType.ThreeOfAKind) {
+			
+			kickerString = this.getKickerString(this.getCards().subList(3,5));
+			additionalHandInfo = String.format("%ss, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			
+		} else if (this.handType == HandType.TwoPair) {
+			
+			kickerString = this.getKickerString(this.getCards().subList(4, 5));
+			additionalHandInfo = String.format(
+					"%ss and %ss, (%s kicker)",
+					this.getCard(0).getValue(),
+					this.getCard(2).getValue(),
+					kickerString
+					);
+			
+		} else if (this.handType == HandType.Pair) {
+			
+			kickerString = this.getKickerString(this.getCards().subList(2, 5));
+			additionalHandInfo = String.format("of %ss, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			
+		} else {
+			kickerString = this.getKickerString(this.getCards().subList(1, 5));
+			additionalHandInfo = String.format("%s, (%s kicker)", this.getCard(0).getValue(), kickerString);
+		}
+		
+		return additionalHandInfo;
+		
+	}
+	
+	public String getKickerString(List<Card> cards) {
+		return cards.stream().map(card -> card.getValue().getShortcutString())
+                .collect(Collectors.joining(", "));
 	}
 	
 	public List<Integer> transformToWheel(List<Integer> numericCardValues) {
@@ -60,6 +136,27 @@ public class Hand implements Comparable<Hand> {
 		return numericCardValues;
 	}
 	
+	public List<Card> transformToWheelCards(List<Card> cards) {
+		
+		var transformedCards = new ArrayList<Card>();
+		
+		var needsTransform = 
+				(this.getHandType(cards) == HandType.Straight || this.getHandType(cards) == HandType.StraightFlush) &&
+				(cards.get(0).getNumericValue() == 14 && cards.get(1).getNumericValue() == 5);
+		
+		if (needsTransform) {
+			transformedCards.addAll(cards.subList(1, 5));
+			transformedCards.add(cards.get(0));
+			
+		} else {
+			transformedCards.addAll(cards);
+		}
+		
+		
+		return transformedCards;
+		
+	}
+	
 	public List<Card> sortByOccurences(List<Card> cards) {
 		
 		var values = new ArrayList<Integer>();
@@ -67,7 +164,9 @@ public class Hand implements Comparable<Hand> {
 			values.add(c.getNumericValue());
 		}
 		
-		cards.sort((card1, card2) -> {
+		var cardsX = new ArrayList<Card>(cards);
+		
+		cardsX.sort((card1, card2) -> {
 			int freq1 = Collections.frequency(values, card1.getNumericValue());
 			int freq2 = Collections.frequency(values, card2.getNumericValue());
 		    var cmp = Integer.compare(freq1, freq2);
@@ -76,9 +175,9 @@ public class Hand implements Comparable<Hand> {
 		    return cmp;
 		});
 	
-		Collections.reverse(cards);
+		Collections.reverse(cardsX);
 		
-		return cards;
+		return cardsX;
 
 	}
 	

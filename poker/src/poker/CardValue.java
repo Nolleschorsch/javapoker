@@ -1,28 +1,34 @@
 package poker;
 
 public enum CardValue {
-	Deuce(2),
-	Three(3),
-	Four(4),
-	Five(5),
-	Six(6),
-	Seven(7),
-	Eight(8),
-	Nine(9),
-	Ten(10),
-	Jack(11),
-	Queen(12),
-	King(13),
-	Ace(14);
+	Deuce(2, "2"),
+	Three(3, "3"),
+	Four(4, "4"),
+	Five(5, "5"),
+	Six(6, "6"),
+	Seven(7, "7"),
+	Eight(8, "8"),
+	Nine(9, "9"),
+	Ten(10, "T"),
+	Jack(11, "J"),
+	Queen(12, "Q"),
+	King(13, "K"),
+	Ace(14, "A");
 
 	private final int value;
+	private final String shortcutString;
 	
-	private CardValue(int value) {
+	private CardValue(int value, String shortcutString) {
 		this.value = value;
+		this.shortcutString = shortcutString;
 	}
 	
 	public int getValue() {
 		return this.value;
+	}
+	
+	public String getShortcutString() {
+		return this.shortcutString;
 	}
 	
 	public static CardValue getCardValueByInt(int i) {

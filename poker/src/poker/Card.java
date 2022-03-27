@@ -22,6 +22,10 @@ public class Card implements Comparable<Card>{
 		return this.value.getValue();
 	}
 	
+	public String getShortcutString() {
+		return String.format("%s%s", this.value.getShortcutString(), this.suit.getShortcutString());
+	}
+	
 	public String toString() {
 		return String.format("%s%s", this.value, this.suit);
 	}

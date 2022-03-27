@@ -20,9 +20,11 @@ public class HandEvaluator {
 		
 		for (var i=1; i<hands.size(); i++) {
 			var hand = hands.get(i);
-			var handType = hand.getHandType(hand);
+			var handType = hand.getHandType(hand.getCards());
 			
-			if (handType == winner.getHandType(winner) && hand.getNumericCardValues().equals(winner.getNumericCardValues())) {
+			if (handType == winner.getHandType(winner.getCards()) &&
+				hand.getNumericCardValues().equals(winner.getNumericCardValues())
+				) {
 				winners.add(hand);
 			} else {
 				losers.add(hand);
@@ -37,7 +39,12 @@ public class HandEvaluator {
 	}
 	
 	public String printWinner(Hand winner) {
-		return String.format("Hand %s wins with %s%n", winner.toString(), winner.getHandType(winner));
+		return String.format(
+				"Hand (%s) wins with %s %s%n",
+				winner.toString(),
+				winner.getHandType(winner.getCards()),
+				winner.getAdditionalHandInfo()
+				);
 		
 	}
 	
@@ -46,7 +53,12 @@ public class HandEvaluator {
 		List<String> winnerStringList = new ArrayList<>();
 		
 		for (Hand winner : winners) {
-			var winnerString = String.format("Hand %s splitts pot with %s%n", winner.toString(), winner.getHandType(winner));
+			var winnerString = String.format(
+					"Hand (%s) splitts pot with %s %s%n",
+					winner.toString(),
+					winner.getHandType(winner.getCards()),
+					winner.getAdditionalHandInfo()
+					);
 			winnerStringList.add(winnerString);
 		}
 		
@@ -58,7 +70,12 @@ public class HandEvaluator {
 		List<String> loserStringList = new ArrayList<>();
 		
 		for (Hand loser : losers) {
-			var loserString = String.format("Hand %s loses with %s%n", loser.toString(), loser.getHandType(loser));
+			var loserString = String.format(
+					"Hand (%s) loses with %s %s%n",
+					loser.toString(),
+					loser.getHandType(loser.getCards()),
+					loser.getAdditionalHandInfo()
+					);
 			loserStringList.add(loserString);
 		}
 		

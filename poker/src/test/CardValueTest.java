@@ -34,6 +34,12 @@ class CardValueTest {
 	}
 
 	@Test
+	void testGetShortcutString() {
+		var expected = "J";
+		assertEquals(expected, CardValue.Jack.getShortcutString());
+	}
+	
+	@Test
 	void testGetCardValueByIntDeuce() {
 		var expected = CardValue.Deuce;
 		var actual = CardValue.getCardValueByInt(2);

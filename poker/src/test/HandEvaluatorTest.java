@@ -144,7 +144,12 @@ class HandEvaluatorTest {
 	void testPrintWinner() {
 		
 		var winner = HandFixtures.fullHouse();
-		var expected = String.format("Hand %s wins with %s%n", winner.toString(), winner.getHandType(winner));
+		var expected = String.format(
+				"Hand (%s) wins with %s %s%n",
+				winner.toString(),
+				winner.getHandType(winner.getCards()),
+				winner.getAdditionalHandInfo()
+				);
 		
 		assertEquals(expected, handEvaluator.printWinner(winner));
 		
@@ -156,8 +161,19 @@ class HandEvaluatorTest {
 		var winner1 = HandFixtures.flush();
 		var winner2 = HandFixtures.flush2();
 		
-		var exp1 = String.format("Hand %s splitts pot with %s%n", winner1.toString(), winner1.getHandType(winner1));
-		var exp2 = String.format("Hand %s splitts pot with %s%n", winner2.toString(), winner2.getHandType(winner2));
+		var exp1 = String.format(
+				"Hand (%s) splitts pot with %s %s%n",
+				winner1.toString(),
+				winner1.getHandType(winner1.getCards()),
+				winner1.getAdditionalHandInfo()
+				);
+		
+		var exp2 = String.format(
+				"Hand (%s) splitts pot with %s %s%n",
+				winner2.toString(),
+				winner2.getHandType(winner2.getCards()),
+				winner2.getAdditionalHandInfo()
+				);
 		
 		var expected = exp1 + exp2;
 		
@@ -171,8 +187,19 @@ class HandEvaluatorTest {
 		var loser1 = HandFixtures.threeOfAKind();
 		var loser2 = HandFixtures.twoPair();
 		
-		var exp1 = String.format("Hand %s loses with %s%n", loser1.toString(), loser1.getHandType(loser1));
-		var exp2 = String.format("Hand %s loses with %s%n", loser2.toString(), loser2.getHandType(loser2));
+		var exp1 = String.format(
+				"Hand (%s) loses with %s %s%n",
+				loser1.toString(),
+				loser1.getHandType(loser1.getCards()),
+				loser1.getAdditionalHandInfo()
+				);
+		
+		var exp2 = String.format(
+				"Hand (%s) loses with %s %s%n",
+				loser2.toString(),
+				loser2.getHandType(loser2.getCards()),
+				loser2.getAdditionalHandInfo()
+				);
 		
 		var expected = exp1 + exp2;
 		

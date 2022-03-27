@@ -3,17 +3,19 @@ package poker;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HandClassifier {
 	
-	public HandType classifyHand(Hand hand) {
+	public HandType classifyHand(List<Card> cards) {
 		
 		HandType handType;
 
-		List<Integer> numericCardValues = hand.getNumericCardValues();
+		//List<Integer> numericCardValues = hand.getNumericCardValues();
+		List<Integer> numericCardValues = cards.stream().map(Card::getNumericValue).collect(Collectors.toList());
 		Set<Integer> uniqueNumericCardValues = Set.copyOf(numericCardValues);
 		
-		if (this.isStraightFlush(hand)) {
+		if (this.isStraightFlush(cards)) {
 			handType = HandType.StraightFlush;
 		}
 		else if (this.isFourOfAKind(uniqueNumericCardValues, numericCardValues)) {
@@ -22,10 +24,10 @@ public class HandClassifier {
 		else if (this.isFullHouse(uniqueNumericCardValues, numericCardValues)) {
 			handType = HandType.FullHouse;
 		}
-		else if (this.isFlush(hand)) {
+		else if (this.isFlush(cards)) {
 			handType = HandType.Flush;
 		}
-		else if (this.isStraight(hand)) {
+		else if (this.isStraight(cards)) {
 			handType = HandType.Straight;
 		}
 		else if (this.isThreeOfAKind(uniqueNumericCardValues, numericCardValues)) {
@@ -77,14 +79,14 @@ public class HandClassifier {
 		return uniqueNumericCardValues.size() == 3 && validOccurenceCount;
 	}
 	
-	public boolean isStraight(Hand hand) {
+	public boolean isStraight(List<Card> cards) {
 
 		// Hand is ordered, in turn to be a straight the difference in values of two adjectant cards needs to be one.
 		// Edge case (A, 5, 4, 3, 2) is also a straight.
 		// first card Ace, second card 5, should be enough to cover the edge case.
-		boolean possibleWheel = hand.getCard(0).getNumericValue() == 14 && hand.getCard(1).getNumericValue() == 5;
+		boolean possibleWheel = cards.get(0).getNumericValue() == 14 && cards.get(1).getNumericValue() == 5;
 		for(var i=1; i<5; i++) {
-			int gap = hand.getCard(i-1).getNumericValue() - hand.getCard(i).getNumericValue();
+			int gap = cards.get(i-1).getNumericValue() - cards.get(i).getNumericValue();
 			if (gap != 1 && !(gap == 9 && possibleWheel)) {
 				return false;
 			}
@@ -93,11 +95,11 @@ public class HandClassifier {
 		return true;
 	}
 	
-	public boolean isFlush(Hand hand) {
+	public boolean isFlush(List<Card> cards) {
 		// In order for the hand to be a flush, each cards needs to be of the same suit.
-		CardSuit suit = hand.getCard(0).getSuit();
+		CardSuit suit = cards.get(0).getSuit();
 		for(var i=0; i<5; i++) {
-			if(hand.getCard(i).getSuit() != suit) {
+			if(cards.get(i).getSuit() != suit) {
 				return false;
 			}
 		}
@@ -133,9 +135,9 @@ public class HandClassifier {
 		return uniqueNumericCardValues.size() == 2 && validOccurenceCount;
 	}
 	
-	public boolean isStraightFlush(Hand hand) {
+	public boolean isStraightFlush(List<Card> cards) {
 		// straightflush as the name suggests, the hand needs to be a straight and a flush at the same time.
-		return this.isFlush(hand) && this.isStraight(hand);
+		return this.isFlush(cards) && this.isStraight(cards);
 	}
 	
 }

@@ -1,15 +1,19 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import poker.Deck;
 import poker.Hand;
 import poker.HandEvaluator;
+import test.CardsFixtures;
 
 public class Main {
 
 	public static void main(String[] args) {
-	      
+	    
+		var playerCount = 5;
+		
 		Deck deck = new Deck();
-	    List<Hand> hands = deck.shuffleUpAndDeal(2);
+	    List<Hand> hands = deck.shuffleUpAndDeal(playerCount);
 		
 	    var he = new HandEvaluator();
 	    

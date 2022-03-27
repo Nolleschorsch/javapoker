@@ -110,15 +110,56 @@ class HandTest {
 	}
 	
 	@Test
-	void testToString() {
+	void testToStringNoStraightNoTransform() {
 
-		var expected = "AceC, JackD, SevenC, FiveS, DeuceH";
+		var expected = "Ac, Jd, 7c, 5s, 2h";
 		var hand = new Hand(cardsAceHigh);
 		var actual = hand.toString();
 		
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	void testToStringStraightNoTransform() {
+
+		var expected = "6c, 5h, 4s, 3d, 2c";
+		var hand = new Hand(CardsFixtures.cardsStraight());
+		var actual = hand.toString();
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testToStringStraightWithTransform() {
+
+		var expected = "5c, 4s, 3h, 2c, Ad";
+		var hand = new Hand(CardsFixtures.cardsWheel());
+		var actual = hand.toString();
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testToStringStraightFlushNoTransform() {
+
+		var expected = "Ac, Kc, Qc, Jc, Tc";
+		var hand = new Hand(CardsFixtures.cardsRoyalFlush());
+		var actual = hand.toString();
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testToStringStraightFlushWithTransform() {
+
+		var expected = "5c, 4c, 3c, 2c, Ac";
+		var hand = new Hand(CardsFixtures.cardsStraightFlushWheel());
+		var actual = hand.toString();
+		
+		assertEquals(expected, actual);
+	}
+	
+	
 	@Test
 	void testGetNumericCardValues() {
 		
@@ -130,12 +171,106 @@ class HandTest {
 	}
 
 	@Test
+	void testGetAdditionalHandInfoStraightFlush() {
+		
+		var hand = new Hand(CardsFixtures.cardsRoyalFlush());
+		var expected = "Ace to Ten";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoStraight() {
+		
+		var hand1 = new Hand(CardsFixtures.cardsWheel());
+		var hand2 = new Hand(CardsFixtures.cardsStraight());
+		
+		var expected1 = "Five to Ace";
+		var expected2 = "Six to Deuce";
+		
+		assertEquals(expected1, hand1.getAdditionalHandInfo());
+		assertEquals(expected2, hand2.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoFourOfAKind() {
+		
+		var hand = new Hand(CardsFixtures.cardsFourOfAKindDeuces());
+		var expected = "Deuces, (A kicker)";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoFullHouse() {
+		
+		var hand = new Hand(CardsFixtures.cardsFullHouse());
+		var expected = "Deuces full of Threes";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoFlush() {
+		
+		var hand = new Hand(CardsFixtures.cardsFlush());
+		var expected = "Ace high, (Q, J, 7, 2 kicker)";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoThreeOfAKind() {
+		
+		var hand = new Hand(CardsFixtures.cardsThreeOfAKindDeuces());
+		var expected = "Deuces, (A, K kicker)";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoTwoPair() {
+		
+		var hand = new Hand(CardsFixtures.cardsTwoPairAcesAndDeuces());
+		var expected = "Aces and Deuces, (4 kicker)";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoPair() {
+		
+		var hand = new Hand(CardsFixtures.cardsPairDeuces());
+		var expected = "of Deuces, (A, T, 7 kicker)";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
+	void testGetAdditionalHandInfoHighcard() {
+		
+		var hand = new Hand(CardsFixtures.cardsAceHigh());
+		var expected = "Ace, (J, 7, 5, 2 kicker)";
+		
+		assertEquals(expected, hand.getAdditionalHandInfo());
+		
+	}
+	
+	@Test
 	void testGetHandType() {
 		
 		var expected = HandType.HighCard;
 		var hand = new Hand(cardsAceHigh);
 		
-		assertEquals(expected, hand.getHandType(hand));
+		assertEquals(expected, hand.getHandType(hand.getCards()));
 		
 	}
 	

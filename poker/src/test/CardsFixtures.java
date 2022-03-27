@@ -11,7 +11,7 @@ public class CardsFixtures {
 
 	private CardsFixtures() {}
 	
-	static List<Card> cardsAceHigh() {
+	public static List<Card> cardsAceHigh() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Seven);
 		var card2 = new Card(CardSuit.D, CardValue.Jack);
@@ -22,7 +22,7 @@ public class CardsFixtures {
 		return new ArrayList<>(List.of(card1, card2, card3, card4, card5));
 	}
 	
-	static List<Card> cardsAceHigh2() {
+	public static List<Card> cardsAceHigh2() {
 		
 		var card1 = new Card(CardSuit.H, CardValue.Seven);
 		var card2 = new Card(CardSuit.S, CardValue.Jack);
@@ -33,7 +33,7 @@ public class CardsFixtures {
 		return new ArrayList<>(List.of(card1, card2, card3, card4, card5));
 	}
 	
-	static List<Card> cardsTenHigh() {
+	public static List<Card> cardsTenHigh() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 		var card2 = new Card(CardSuit.D, CardValue.Ten);
@@ -44,7 +44,7 @@ public class CardsFixtures {
 		return new ArrayList<>(List.of(card1, card2, card3, card4, card5));
 	}
 	
-	static List<Card> cardsFullHouse() {
+	public static List<Card> cardsFullHouse() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 		var card2 = new Card(CardSuit.D, CardValue.Three);
@@ -55,7 +55,7 @@ public class CardsFixtures {
 		return new ArrayList<>(List.of(card1, card2, card3, card4, card5));
 	}
 	
-	static List<Card> cardsWheel() {
+	public static List<Card> cardsWheel() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 		var card2 = new Card(CardSuit.D, CardValue.Ace);
@@ -67,7 +67,7 @@ public class CardsFixtures {
 		
 	}
 	
-	static List<Card> cardsWheelWrong() {
+	public static List<Card> cardsWheelWrong() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.D, CardValue.Jack);
@@ -79,7 +79,7 @@ public class CardsFixtures {
 		
 	}
 	
-	static List<Card> cardsPairDeuces() {
+	public static List<Card> cardsPairDeuces() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.D, CardValue.Seven);
@@ -91,7 +91,7 @@ public class CardsFixtures {
 	    
 	}
 	
-	static List<Card> cardsTwoPairAcesAndDeuces() {
+	public static List<Card> cardsTwoPairAcesAndDeuces() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.D, CardValue.Deuce);
@@ -103,7 +103,7 @@ public class CardsFixtures {
 	    
 	}
 	
-	static List<Card> cardsThreeOfAKindDeuces() {
+	public static List<Card> cardsThreeOfAKindDeuces() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.D, CardValue.Deuce);
@@ -115,7 +115,7 @@ public class CardsFixtures {
 	    
 	}
 	
-	static List<Card> cardsStraight() {
+	public static List<Card> cardsStraight() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.D, CardValue.Three);
@@ -127,7 +127,7 @@ public class CardsFixtures {
 	    
 	}
 	
-	static List<Card> cardsFlush() {
+	public static List<Card> cardsFlush() {
 		
 		var card1 = new Card(CardSuit.D, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.D, CardValue.Seven);
@@ -139,7 +139,7 @@ public class CardsFixtures {
 	    
 	}
 	
-	static List<Card> cardsFourOfAKindDeuces() {
+	public static List<Card> cardsFourOfAKindDeuces() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.D, CardValue.Deuce);
@@ -151,7 +151,7 @@ public class CardsFixtures {
 	    
 	}
 	
-	static List<Card> cardsStraightFlush() {
+	public static List<Card> cardsStraightFlush() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Deuce);
 	    var card2 = new Card(CardSuit.C, CardValue.Three);
@@ -163,7 +163,19 @@ public class CardsFixtures {
 	    
 	}
 	
-	static List<Card> cardsRoyalFlush() {
+	public static List<Card> cardsStraightFlushWheel() {
+		
+		var card1 = new Card(CardSuit.C, CardValue.Deuce);
+	    var card2 = new Card(CardSuit.C, CardValue.Three);
+	    var card3 = new Card(CardSuit.C, CardValue.Four);
+	    var card4 = new Card(CardSuit.C, CardValue.Five);
+	    var card5 = new Card(CardSuit.C, CardValue.Ace);
+		
+	    return new ArrayList<>(List.of(card1, card2, card3, card4, card5));
+	    
+	}
+	
+	public static List<Card> cardsRoyalFlush() {
 		
 		var card1 = new Card(CardSuit.C, CardValue.Ace);
 	    var card2 = new Card(CardSuit.C, CardValue.King);

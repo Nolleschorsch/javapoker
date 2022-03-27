@@ -96,17 +96,18 @@ class HandClassifierTest {
 		
 		var expected = HandType.StraightFlush;
 		
-		var goodHands = new ArrayList<Hand>(List.of(handStraightFlush));
+		var goodHands = new ArrayList<Hand>(List.of(handStraightFlush, new Hand(CardsFixtures.cardsStraightFlushWheel())));
 		var badHands = new ArrayList<Hand>(allHands);
+		
 		
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -122,11 +123,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -142,11 +143,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -162,11 +163,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -182,11 +183,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -202,11 +203,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -222,11 +223,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -242,11 +243,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -262,11 +263,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 
 		for (Hand hand : goodHands) {
-			assertEquals(expected, handClassifier.classifyHand(hand));
+			assertEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertNotEquals(expected, handClassifier.classifyHand(hand));
+			assertNotEquals(expected, handClassifier.classifyHand(hand.getCards()));
 		}
 		
 	}
@@ -340,11 +341,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 		
 		for (Hand hand : goodHands) {
-			assertTrue(handClassifier.isStraight(hand));
+			assertTrue(handClassifier.isStraight(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertFalse(handClassifier.isStraight(hand));
+			assertFalse(handClassifier.isStraight(hand.getCards()));
 		}
 		
 	}
@@ -357,11 +358,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 		
 		for (Hand hand : goodHands) {
-			assertTrue(handClassifier.isFlush(hand));
+			assertTrue(handClassifier.isFlush(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertFalse(handClassifier.isFlush(hand));
+			assertFalse(handClassifier.isFlush(hand.getCards()));
 		}
 		
 	}
@@ -416,11 +417,11 @@ class HandClassifierTest {
 		badHands.removeAll(goodHands);
 		
 		for (Hand hand : goodHands) {
-			assertTrue(handClassifier.isStraightFlush(hand));
+			assertTrue(handClassifier.isStraightFlush(hand.getCards()));
 		}
 		
 		for (Hand hand : badHands) {
-			assertFalse(handClassifier.isStraightFlush(hand));
+			assertFalse(handClassifier.isStraightFlush(hand.getCards()));
 		}
 		
 	}
