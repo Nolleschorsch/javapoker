@@ -23,16 +23,16 @@ public class Deck {
 		CardSuit[] suits = CardSuit.values();
 		CardValue[] values = CardValue.values();
 		
-		var cards = new ArrayList<Card>();
+		var deckCards = new ArrayList<Card>();
 		
 		for (var i=0; i<suits.length; i++) {
 			for(var j=0; j<values.length; j++) {
 				var card = new Card(suits[i], values[j]);
-				cards.add(card);
+				deckCards.add(card);
 			}
 		}
 		
-		return cards;
+		return deckCards;
 	}
 	
 	public List<Card> getDeck() {

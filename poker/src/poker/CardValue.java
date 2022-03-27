@@ -1,26 +1,28 @@
 package poker;
 
 public enum CardValue {
-	Deuce(2, "2"),
-	Three(3, "3"),
-	Four(4, "4"),
-	Five(5, "5"),
-	Six(6, "6"),
-	Seven(7, "7"),
-	Eight(8, "8"),
-	Nine(9, "9"),
-	Ten(10, "T"),
-	Jack(11, "J"),
-	Queen(12, "Q"),
-	King(13, "K"),
-	Ace(14, "A");
+	DEUCE(2, "2", "Deuce"),
+	THREE(3, "3", "Three"),
+	FOUR(4, "4", "Four"),
+	FIVE(5, "5", "Five"),
+	SIX(6, "6", "Six"),
+	SEVEN(7, "7", "Seven"),
+	EIGHT(8, "8", "Eight"),
+	NINE(9, "9", "Nine"),
+	TEN(10, "T", "Ten"),
+	JACK(11, "J", "Jack"),
+	QUEEN(12, "Q", "Queen"),
+	KING(13, "K", "King"),
+	ACE(14, "A", "Ace");
 
 	private final int value;
 	private final String shortcutString;
+	private final String verboseString;
 	
-	private CardValue(int value, String shortcutString) {
+	private CardValue(int value, String shortcutString, String verboseString) {
 		this.value = value;
 		this.shortcutString = shortcutString;
+		this.verboseString = verboseString;
 	}
 	
 	public int getValue() {
@@ -31,49 +33,53 @@ public enum CardValue {
 		return this.shortcutString;
 	}
 	
+	public String getVerboseString() {
+		return this.verboseString;
+	}
+	
 	public static CardValue getCardValueByInt(int i) {
 		
 		CardValue returnValue;
 		
 		switch(i) {
 			case 2:
-				returnValue = CardValue.Deuce;
+				returnValue = CardValue.DEUCE;
 				break;
 			case 3:
-				returnValue = CardValue.Three;
+				returnValue = CardValue.THREE;
 				break;
 			case 4:
-				returnValue = CardValue.Four;
+				returnValue = CardValue.FOUR;
 				break;
 			case 5:
-				returnValue = CardValue.Five;
+				returnValue = CardValue.FIVE;
 				break;
 			case 6:
-				returnValue = CardValue.Six;
+				returnValue = CardValue.SIX;
 				break;
 			case 7:
-				returnValue = CardValue.Seven;
+				returnValue = CardValue.SEVEN;
 				break;
 			case 8:
-				returnValue = CardValue.Eight;
+				returnValue = CardValue.EIGHT;
 				break;
 			case 9:
-				returnValue = CardValue.Nine;
+				returnValue = CardValue.NINE;
 				break;
 			case 10:
-				returnValue = CardValue.Ten;
+				returnValue = CardValue.TEN;
 				break;
 			case 11:
-				returnValue = CardValue.Jack;
+				returnValue = CardValue.JACK;
 				break;
 			case 12:
-				returnValue = CardValue.Queen;
+				returnValue = CardValue.QUEEN;
 				break;
 			case 13:
-				returnValue = CardValue.King;
+				returnValue = CardValue.KING;
 				break;
 			default:
-				returnValue = CardValue.Ace;
+				returnValue = CardValue.ACE;
 				break;
 		}
 		

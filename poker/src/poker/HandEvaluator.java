@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class HandEvaluator {
-
-	public HandEvaluator() {}
 	
 	public List<String> evaluateWinner(List<Hand> hands) {
 		
@@ -34,7 +32,7 @@ public class HandEvaluator {
 		winMessage = winners.size() == 1 ? this.printWinner(winner) : this.printSplitPot(winners);
 		lossMessage = losers.isEmpty() ? "" : this.printLosers(losers);
 		
-		return new ArrayList<String>(List.of(winMessage, lossMessage));
+		return new ArrayList<>(List.of(winMessage, lossMessage));
 		
 	}
 	
@@ -42,7 +40,7 @@ public class HandEvaluator {
 		return String.format(
 				"Hand (%s) wins with %s %s%n",
 				winner.toString(),
-				winner.getHandType(winner.getCards()),
+				winner.getHandType(winner.getCards()).getName(),
 				winner.getAdditionalHandInfo()
 				);
 		
@@ -56,7 +54,7 @@ public class HandEvaluator {
 			var winnerString = String.format(
 					"Hand (%s) splitts pot with %s %s%n",
 					winner.toString(),
-					winner.getHandType(winner.getCards()),
+					winner.getHandType(winner.getCards()).getName(),
 					winner.getAdditionalHandInfo()
 					);
 			winnerStringList.add(winnerString);
@@ -73,7 +71,7 @@ public class HandEvaluator {
 			var loserString = String.format(
 					"Hand (%s) loses with %s %s%n",
 					loser.toString(),
-					loser.getHandType(loser.getCards()),
+					loser.getHandType(loser.getCards()).getName(),
 					loser.getAdditionalHandInfo()
 					);
 			loserStringList.add(loserString);

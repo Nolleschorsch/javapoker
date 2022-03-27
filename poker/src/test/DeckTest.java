@@ -7,31 +7,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import poker.*;
 
 class DeckTest {
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
 
 	@Test
 	void testDeck() {
@@ -132,19 +112,20 @@ class DeckTest {
 	@Test
 	void testShuffleUpAndDeal() {
 		
+		// create two decks
 		var random1 = new Random(42);
 		var random2 = new Random(42);
 		
-		var deck = new Deck(random1);
-		// create two decks
-		var cards1 = deck.getDeck();
-		var cards2 = deck.generateDeck();
-		var size = cards2.size();
+		var deck1 = new Deck(random1);
+		var deck2 = new Deck(random2);
+		
+		var cards2 = deck2.generateDeck();
 		
 		// shuffle them both with identical random seed and deal five cards to each player
-		var hands = deck.shuffleUpAndDeal(2); // two players
+		var hands = deck1.shuffleUpAndDeal(2); // two players
 		
 		Collections.shuffle(cards2, random2);
+		
 		var genHand1Cards = new ArrayList<Card>(List.of(
 				cards2.get(0), cards2.get(1), cards2.get(2), cards2.get(3), cards2.get(4)
 				));

@@ -6,13 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import poker.Deck;
 import poker.Hand;
 import poker.HandClassifier;
 import poker.HandType;
@@ -44,21 +40,21 @@ class HandClassifierTest {
 		
 		handClassifier = new HandClassifier();
 		
-		handStraightFlush = HandFixtures.straightFlush();
-		handFourOfAKind = HandFixtures.fourOfAKind();
-		handFullHouse = HandFixtures.fullHouse();
-		handFlush = HandFixtures.flush();
-		handStraight = HandFixtures.straight();
-		handStraightWheel = HandFixtures.straightWheel();
-		handStraightWheelWrong = HandFixtures.straightWheelWrong();
-		handThreeOfAKind = HandFixtures.threeOfAKind();
-		handTwoPair =  HandFixtures.twoPair();
-		handPair =  HandFixtures.pair();
-		handPairSixes = HandFixtures.pairSixes();
-		handPairTens = HandFixtures.pairTens();
-		handPairTensLow = HandFixtures.pairTensLow();
-		handHighcardAce = HandFixtures.highcardAce();
-		handHighcardQueen = HandFixtures.highcardQueen();
+		handStraightFlush = new Hand(CardsFixtures.cardsStraightFlush());
+		handFourOfAKind = new Hand(CardsFixtures.cardsFourOfAKindDeuces());
+		handFullHouse = new Hand(CardsFixtures.cardsFullHouse());
+		handFlush = new Hand(CardsFixtures.cardsFlush());
+		handStraight = new Hand(CardsFixtures.cardsStraight());
+		handStraightWheel = new Hand(CardsFixtures.cardsStraightWheel());
+		handStraightWheelWrong = new Hand(CardsFixtures.cardsStraightWheelWrong());
+		handThreeOfAKind = new Hand(CardsFixtures.cardsThreeOfAKindDeuces());
+		handTwoPair =  new Hand(CardsFixtures.cardsTwoPairAcesAndDeuces());
+		handPair =  new Hand(CardsFixtures.cardsPairDeuces());
+		handPairSixes = new Hand(CardsFixtures.cardsPairSixes());
+		handPairTens = new Hand(CardsFixtures.cardsPairTens());
+		handPairTensLow = new Hand(CardsFixtures.cardsPairTensLow());
+		handHighcardAce = new Hand(CardsFixtures.cardsHighcardAce());
+		handHighcardQueen = new Hand(CardsFixtures.cardsHighcardQueen());
 		
 		allHands = new ArrayList<>(List.of(
 				
@@ -68,18 +64,6 @@ class HandClassifierTest {
 				handHighcardQueen
 
 				));
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
 	}
 
 	@Test
@@ -94,7 +78,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandStraightFlush() {
 		
-		var expected = HandType.StraightFlush;
+		var expected = HandType.STRAIGHTFLUSH;
 		
 		var goodHands = new ArrayList<Hand>(List.of(handStraightFlush, new Hand(CardsFixtures.cardsStraightFlushWheel())));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -115,7 +99,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandFourOfKind() {
 		
-		var expected = HandType.FourOfAKind;
+		var expected = HandType.FOUROFAKIND;
 		
 		var goodHands = new ArrayList<Hand>(List.of(handFourOfAKind));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -135,7 +119,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandFullHouse() {
 		
-		var expected = HandType.FullHouse;
+		var expected = HandType.FULLHOUSE;
 		
 		var goodHands = new ArrayList<Hand>(List.of(handFullHouse));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -155,7 +139,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandFlush() {
 
-		var expected = HandType.Flush;
+		var expected = HandType.FLUSH;
 
 		var goodHands = new ArrayList<Hand>(List.of(handFlush));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -175,7 +159,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandStraight() {
 
-		var expected = HandType.Straight;
+		var expected = HandType.STRAIGHT;
 
 		var goodHands = new ArrayList<Hand>(List.of(handStraight, handStraightWheel));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -195,7 +179,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandThreeOfAKind() {
 
-		var expected = HandType.ThreeOfAKind;
+		var expected = HandType.THREEOFAKIND;
 	
 		var goodHands = new ArrayList<Hand>(List.of(handThreeOfAKind));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -215,7 +199,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandTwoPair() {
 
-		var expected = HandType.TwoPair;
+		var expected = HandType.TWOPAIR;
 		
 		var goodHands = new ArrayList<Hand>(List.of(handTwoPair));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -235,7 +219,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandPair() {
 
-		var expected = HandType.Pair;
+		var expected = HandType.PAIR;
 		
 		var goodHands = new ArrayList<Hand>(List.of(handPair, handPairSixes, handPairTens, handPairTensLow));
 		var badHands = new ArrayList<Hand>(allHands);
@@ -255,7 +239,7 @@ class HandClassifierTest {
 	@Test
 	void testClassifyHandHighCard() {
 		
-		var expected = HandType.HighCard;
+		var expected = HandType.HIGHCARD;
 		
 		var goodHands = new ArrayList<Hand>(List.of(handHighcardAce, handHighcardQueen, handStraightWheelWrong));
 		var badHands = new ArrayList<Hand>(allHands);

@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import poker.Hand;
@@ -23,18 +20,6 @@ class HandEvaluatorTest {
 		handEvaluator = new HandEvaluator();
 	}
 
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-
 	@Test
 	void testHandEvaluator() {
 		try {
@@ -47,11 +32,11 @@ class HandEvaluatorTest {
 	@Test
 	void testEvaluateWinnerSingleWinnerWithLoser() {
 		
-		var hand1 = HandFixtures.flush();
-		var hand2 = HandFixtures.highcardQueen();
+		var hand1 = new Hand(CardsFixtures.cardsFlush());
+		var hand2 = new Hand(CardsFixtures.cardsHighcardQueen());
 		
 		var expectedWinner = handEvaluator.printWinner(hand1);
-		var expectedLoser = handEvaluator.printLosers(new ArrayList<Hand>(List.of(hand2)));
+		var expectedLoser = handEvaluator.printLosers(new ArrayList<>(List.of(hand2)));
 		
 		var hands = new ArrayList<Hand>(List.of(hand1, hand2));
 		
@@ -60,18 +45,17 @@ class HandEvaluatorTest {
 		assertEquals(expectedWinner, result.get(0));
 		assertEquals(expectedLoser, result.get(1));
 		
-		
 	}
 
 	@Test
 	void testEvaluateWinnerSingleWinnerWithLoserVariant() {
 		
-		var hand1 = HandFixtures.pairTens();
-		var hand2 = HandFixtures.pairTensLow();
-		var hand3 = HandFixtures.highcardQueen();
+		var hand1 = new Hand(CardsFixtures.cardsPairTens());
+		var hand2 = new Hand(CardsFixtures.cardsPairTensLow());
+		var hand3 = new Hand(CardsFixtures.cardsHighcardQueen());
 		
 		var expectedWinner = handEvaluator.printWinner(hand1);
-		var expectedLoser = handEvaluator.printLosers(new ArrayList<Hand>(List.of(hand2, hand3)));
+		var expectedLoser = handEvaluator.printLosers(new ArrayList<>(List.of(hand2, hand3)));
 		
 		var hands = new ArrayList<Hand>(List.of(hand3, hand1, hand2));
 		
@@ -80,13 +64,12 @@ class HandEvaluatorTest {
 		assertEquals(expectedWinner, result.get(0));
 		assertEquals(expectedLoser, result.get(1));
 		
-		
 	}
 	
 	@Test
 	void testEvaluateWinnerSingleWinnerNoLoser() {
 		
-		var hand = HandFixtures.twoPair();
+		var hand = new Hand(CardsFixtures.cardsTwoPairAcesAndDeuces());
 		
 		var expectedWinner = handEvaluator.printWinner(hand);
 		var expectedLoser = "";
@@ -98,18 +81,17 @@ class HandEvaluatorTest {
 		assertEquals(expectedWinner, result.get(0));
 		assertEquals(expectedLoser, result.get(1));
 		
-		
 	}
 	
 	@Test
 	void testEvaluateWinnerSplitWithLoser() {
 		
-		var hand1 = HandFixtures.flush();
-		var hand2 = HandFixtures.flush2();
-		var hand3 = HandFixtures.highcardQueen();
+		var hand1 = new Hand(CardsFixtures.cardsFlush());
+		var hand2 = new Hand(CardsFixtures.cardsFlushEqual());
+		var hand3 = new Hand(CardsFixtures.cardsHighcardQueen());
 		
-		var expectedWinner = handEvaluator.printSplitPot(new ArrayList<Hand>(List.of(hand1, hand2)));
-		var expectedLoser = handEvaluator.printLosers(new ArrayList<Hand>(List.of(hand3)));
+		var expectedWinner = handEvaluator.printSplitPot(new ArrayList<>(List.of(hand1, hand2)));
+		var expectedLoser = handEvaluator.printLosers(new ArrayList<>(List.of(hand3)));
 		
 		var hands = new ArrayList<Hand>(List.of(hand3, hand1, hand2));
 		
@@ -118,16 +100,15 @@ class HandEvaluatorTest {
 		assertEquals(expectedWinner, result.get(0));
 		assertEquals(expectedLoser, result.get(1));
 		
-		
 	}
 	
 	@Test
 	void testEvaluateWinnerSplitNoLoser() {
 		
-		var hand1 = HandFixtures.flush();
-		var hand2 = HandFixtures.flush2();
+		var hand1 = new Hand(CardsFixtures.cardsFlush());
+		var hand2 = new Hand(CardsFixtures.cardsFlushEqual());
 		
-		var expectedWinner = handEvaluator.printSplitPot(new ArrayList<Hand>(List.of(hand1, hand2)));
+		var expectedWinner = handEvaluator.printSplitPot(new ArrayList<>(List.of(hand1, hand2)));
 		var expectedLoser = "";
 		
 		var hands = new ArrayList<Hand>(List.of(hand1, hand2));
@@ -137,17 +118,16 @@ class HandEvaluatorTest {
 		assertEquals(expectedWinner, result.get(0));
 		assertEquals(expectedLoser, result.get(1));
 		
-		
 	}
 	
 	@Test
 	void testPrintWinner() {
 		
-		var winner = HandFixtures.fullHouse();
+		var winner = new Hand(CardsFixtures.cardsFullHouse());
 		var expected = String.format(
 				"Hand (%s) wins with %s %s%n",
 				winner.toString(),
-				winner.getHandType(winner.getCards()),
+				winner.getHandType(winner.getCards()).getName(),
 				winner.getAdditionalHandInfo()
 				);
 		
@@ -158,52 +138,52 @@ class HandEvaluatorTest {
 	@Test
 	void testPrintSplitPot() {
 		
-		var winner1 = HandFixtures.flush();
-		var winner2 = HandFixtures.flush2();
+		var winner1 = new Hand(CardsFixtures.cardsFlush());
+		var winner2 = new Hand(CardsFixtures.cardsFlushEqual());
 		
 		var exp1 = String.format(
 				"Hand (%s) splitts pot with %s %s%n",
 				winner1.toString(),
-				winner1.getHandType(winner1.getCards()),
+				winner1.getHandType(winner1.getCards()).getName(),
 				winner1.getAdditionalHandInfo()
 				);
 		
 		var exp2 = String.format(
 				"Hand (%s) splitts pot with %s %s%n",
 				winner2.toString(),
-				winner2.getHandType(winner2.getCards()),
+				winner2.getHandType(winner2.getCards()).getName(),
 				winner2.getAdditionalHandInfo()
 				);
 		
 		var expected = exp1 + exp2;
 		
-		assertEquals(expected, handEvaluator.printSplitPot(new ArrayList<Hand>(List.of(winner1, winner2))));
+		assertEquals(expected, handEvaluator.printSplitPot(new ArrayList<>(List.of(winner1, winner2))));
 		
 	}
 
 	@Test
 	void testPrintLosers() {
 
-		var loser1 = HandFixtures.threeOfAKind();
-		var loser2 = HandFixtures.twoPair();
+		var loser1 = new Hand(CardsFixtures.cardsThreeOfAKindDeuces());
+		var loser2 = new Hand(CardsFixtures.cardsTwoPairAcesAndDeuces());
 		
 		var exp1 = String.format(
 				"Hand (%s) loses with %s %s%n",
 				loser1.toString(),
-				loser1.getHandType(loser1.getCards()),
+				loser1.getHandType(loser1.getCards()).getName(),
 				loser1.getAdditionalHandInfo()
 				);
 		
 		var exp2 = String.format(
 				"Hand (%s) loses with %s %s%n",
 				loser2.toString(),
-				loser2.getHandType(loser2.getCards()),
+				loser2.getHandType(loser2.getCards()).getName(),
 				loser2.getAdditionalHandInfo()
 				);
 		
 		var expected = exp1 + exp2;
 		
-		assertEquals(expected, handEvaluator.printLosers(new ArrayList<Hand>(List.of(loser1, loser2))));
+		assertEquals(expected, handEvaluator.printLosers(new ArrayList<>(List.of(loser1, loser2))));
 		
 	}
 

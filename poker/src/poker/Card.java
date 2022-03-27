@@ -27,7 +27,7 @@ public class Card implements Comparable<Card>{
 	}
 	
 	public String toString() {
-		return String.format("%s%s", this.value, this.suit);
+		return String.format("%s%s", this.value.getVerboseString(), this.suit);
 	}
 	
 	public int compareTo(Card card) {

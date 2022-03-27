@@ -33,7 +33,7 @@ public class Hand implements Comparable<Hand> {
 		var transformedCards = new ArrayList<Card>();
 		
 		var needsTransform = 
-				(this.getHandType(cards) == HandType.Straight || this.getHandType(cards) == HandType.StraightFlush) &&
+				(this.getHandType(cards) == HandType.STRAIGHT || this.getHandType(cards) == HandType.STRAIGHTFLUSH) &&
 				(cards.get(0).getNumericValue() == 14 && cards.get(1).getNumericValue() == 5);
 		
 		if (needsTransform) {
@@ -66,55 +66,70 @@ public class Hand implements Comparable<Hand> {
 	
 	public String getAdditionalHandInfo() {
 		
+		// adds additional handinfo e.g what kind of pair and kicker cards
+		
 		String additionalHandInfo;
 		var kickerString = "";
+		var kindString = "";
+		var kindString2 = "";
 		
-		if (this.handType == HandType.StraightFlush || this.handType == HandType.Straight) {
+		if (this.handType == HandType.STRAIGHTFLUSH || this.handType == HandType.STRAIGHT) {
 			
-			//TODO: cleanup this whole wheel mess...
 			var transformedCards = this.transformToWheelCards(this.cards);
-			var start= transformedCards.get(0).getValue();
-			var end = transformedCards.get(4).getValue();
+			var start = transformedCards.get(0).getValue().getVerboseString();
+			var end = transformedCards.get(4).getValue().getVerboseString();
 
 			additionalHandInfo = String.format("%s to %s", start, end);
 			
-		} else if (this.handType == HandType.FourOfAKind) {
+		} else if (this.handType == HandType.FOUROFAKIND) {
 			
 			kickerString = this.getKickerString(this.getCards().subList(4, 5));
-			additionalHandInfo = String.format("%ss, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			kindString = this.getCard(0).getValue().getVerboseString();
 			
-		} else if (this.handType == HandType.FullHouse) {
+			additionalHandInfo = String.format("%ss, (%s kicker)", kindString, kickerString);
 			
-			additionalHandInfo = String.format("%ss full of %ss", this.getCard(0).getValue(), this.getCard(3).getValue());
+		} else if (this.handType == HandType.FULLHOUSE) {
 			
-		} else if (this.handType == HandType.Flush) {
+			kindString = this.getCard(0).getValue().getVerboseString();
+			kindString2 = this.getCard(3).getValue().getVerboseString();
+			
+			additionalHandInfo = String.format("%ss full of %ss", kindString, kindString2);
+			
+		} else if (this.handType == HandType.FLUSH) {
 			
 			kickerString = this.getKickerString(this.getCards().subList(1, 5));
-			additionalHandInfo = String.format("%s high, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			kindString = this.getCard(0).getValue().getVerboseString();
 			
-		} else if (this.handType == HandType.ThreeOfAKind) {
+			additionalHandInfo = String.format("%s high, (%s kicker)", kindString, kickerString);
+			
+		} else if (this.handType == HandType.THREEOFAKIND) {
 			
 			kickerString = this.getKickerString(this.getCards().subList(3,5));
-			additionalHandInfo = String.format("%ss, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			kindString =  this.getCard(0).getValue().getVerboseString();
 			
-		} else if (this.handType == HandType.TwoPair) {
+			additionalHandInfo = String.format("%ss, (%s kicker)", kindString, kickerString);
+			
+		} else if (this.handType == HandType.TWOPAIR) {
 			
 			kickerString = this.getKickerString(this.getCards().subList(4, 5));
-			additionalHandInfo = String.format(
-					"%ss and %ss, (%s kicker)",
-					this.getCard(0).getValue(),
-					this.getCard(2).getValue(),
-					kickerString
-					);
+			kindString = this.getCard(0).getValue().getVerboseString();
+			kindString2 = this.getCard(2).getValue().getVerboseString();
 			
-		} else if (this.handType == HandType.Pair) {
+			additionalHandInfo = String.format("%ss and %ss, (%s kicker)", kindString, kindString2, kickerString);
+			
+		} else if (this.handType == HandType.PAIR) {
 			
 			kickerString = this.getKickerString(this.getCards().subList(2, 5));
-			additionalHandInfo = String.format("of %ss, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			kindString = this.getCard(0).getValue().getVerboseString();
+			
+			additionalHandInfo = String.format("of %ss, (%s kicker)", kindString, kickerString);
 			
 		} else {
+			
 			kickerString = this.getKickerString(this.getCards().subList(1, 5));
-			additionalHandInfo = String.format("%s, (%s kicker)", this.getCard(0).getValue(), kickerString);
+			kindString = this.getCard(0).getValue().getVerboseString();
+			
+			additionalHandInfo = String.format("%s, (%s kicker)", kindString, kickerString);
 		}
 		
 		return additionalHandInfo;
@@ -141,7 +156,7 @@ public class Hand implements Comparable<Hand> {
 		var transformedCards = new ArrayList<Card>();
 		
 		var needsTransform = 
-				(this.getHandType(cards) == HandType.Straight || this.getHandType(cards) == HandType.StraightFlush) &&
+				(this.getHandType(cards) == HandType.STRAIGHT || this.getHandType(cards) == HandType.STRAIGHTFLUSH) &&
 				(cards.get(0).getNumericValue() == 14 && cards.get(1).getNumericValue() == 5);
 		
 		if (needsTransform) {
@@ -196,10 +211,10 @@ public class Hand implements Comparable<Hand> {
 	public int compareHighCard(Hand otherHand) {
 		
 		// change the numericCardValue of an Ace to 1 if he hand is a straight.
-		var numValues = (this.handType == HandType.Straight || this.handType == HandType.StraightFlush)
+		var numValues = (this.handType == HandType.STRAIGHT || this.handType == HandType.STRAIGHTFLUSH)
 				? this.transformToWheel(this.numericCardValues) : this.numericCardValues;
 		
-		var otherNumValues = (otherHand.handType == HandType.Straight || this.handType == HandType.StraightFlush)
+		var otherNumValues = (otherHand.handType == HandType.STRAIGHT || this.handType == HandType.STRAIGHTFLUSH)
 				? otherHand.transformToWheel(otherHand.getNumericCardValues()) : otherHand.getNumericCardValues();
 		
 		for (var i=0; i<5; i++) {

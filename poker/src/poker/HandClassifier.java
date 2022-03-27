@@ -11,36 +11,35 @@ public class HandClassifier {
 		
 		HandType handType;
 
-		//List<Integer> numericCardValues = hand.getNumericCardValues();
 		List<Integer> numericCardValues = cards.stream().map(Card::getNumericValue).collect(Collectors.toList());
 		Set<Integer> uniqueNumericCardValues = Set.copyOf(numericCardValues);
 		
 		if (this.isStraightFlush(cards)) {
-			handType = HandType.StraightFlush;
+			handType = HandType.STRAIGHTFLUSH;
 		}
 		else if (this.isFourOfAKind(uniqueNumericCardValues, numericCardValues)) {
-			handType = HandType.FourOfAKind;
+			handType = HandType.FOUROFAKIND;
 		}
 		else if (this.isFullHouse(uniqueNumericCardValues, numericCardValues)) {
-			handType = HandType.FullHouse;
+			handType = HandType.FULLHOUSE;
 		}
 		else if (this.isFlush(cards)) {
-			handType = HandType.Flush;
+			handType = HandType.FLUSH;
 		}
 		else if (this.isStraight(cards)) {
-			handType = HandType.Straight;
+			handType = HandType.STRAIGHT;
 		}
 		else if (this.isThreeOfAKind(uniqueNumericCardValues, numericCardValues)) {
-			handType = HandType.ThreeOfAKind;
+			handType = HandType.THREEOFAKIND;
 		}
 		else if (this.isTwoPair(uniqueNumericCardValues, numericCardValues)) {
-			handType = HandType.TwoPair;
+			handType = HandType.TWOPAIR;
 		}
 		else if (this.isPair(uniqueNumericCardValues)) {
-			handType = HandType.Pair;
+			handType = HandType.PAIR;
 		}
 		else {
-			handType = HandType.HighCard;
+			handType = HandType.HIGHCARD;
 		}
 		
 		return handType;
